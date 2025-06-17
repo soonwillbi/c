@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuestionStore } from "../store";
-import "../app.css";
+import "../App.css";
 
 function parseDuration(duration) {
   return duration.includes("분")
