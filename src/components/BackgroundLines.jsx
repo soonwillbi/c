@@ -1,9 +1,6 @@
 import React from 'react';
-import { useQuestionStore } from '../store';
 
 function BackgroundLines() {
-  const { scale, dx } = useQuestionStore((s) => s.transform);
-  const x = (window.innerWidth / 2) * scale + dx;
   const height = window.innerHeight;
   const width = window.innerWidth;
 
@@ -12,9 +9,9 @@ function BackgroundLines() {
   return (
     <svg className="absolute w-full h-full top-0 left-0 pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
       <line
-        x1={x}
+        x1="50%"
         y1={0}
-        x2={x}
+        x2="50%"
         y2={height}
         stroke="#272727"
         strokeWidth="1"

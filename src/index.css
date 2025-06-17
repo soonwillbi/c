@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @font-face {
   font-family: 'OnulHeugdan';
   src: url('/fonts/OnulHeugdan-Black.otf') format('opentype');

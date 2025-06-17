@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { questions } from "./data";
 import { useQuestionStore } from './store';
 
@@ -22,11 +22,11 @@ function Field({ elRefs }) {
 
   const percentage = useQuestionStore((s) => s.getScore().percentage);
 
-  const handleAnswer = (questionId, answer) => {
+  const handleAnswer = useCallback((questionId, answer) => {
     const category = questionId.slice(0, 2);
     const level = questionId.endsWith("m") ? "main" : "sub";
     useQuestionStore.getState().setCategoryAnswer(category, level, questionId, answer);
-  };
+  }, []);
 
   const addToPath = useQuestionStore((s) => s.addToPath);
   const lastRenderTime = useQuestionStore((s) => s.lastRenderTime);
@@ -36,7 +36,7 @@ function Field({ elRefs }) {
     setRenderTime(Date.now());
   }, [currentId, setRenderTime]);
 
-  const handleButtonClick = (id, label, next) => {
+  const handleButtonClick = useCallback((id, label, next) => {
     // only O and X labels trigger answer handling
     if (["O", "X"].includes(label)) {
       handleAnswer(id, label);
@@ -46,13 +46,37 @@ function Field({ elRefs }) {
     if (label !== "-") {
       const now = Date.now();
       const delta = now - lastRenderTime;
+      // record start point
       addToPath(id, delta);
+      // also record destination to draw final segment
+      addToPath(next, 0);
     }
-  };
+  }, [handleAnswer, setCurrentId, lastRenderTime, addToPath]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const q = questions[currentId];
+      if (!q?.options) return;
+      const opts = Object.entries(q.options).filter(([key]) => !['menu'].includes(key));
+      let idx;
+      if (e.key === 'ArrowLeft') idx = 0;
+      else if (e.key === 'ArrowDown') idx = 1;
+      else if (e.key === 'ArrowRight') idx = 2;
+      else return;
+      const [optKey, optVal] = opts[idx] || [];
+      if (!optKey) return;
+      const label = typeof optVal === 'object' ? optVal.label : optKey;
+      const next = typeof optVal === 'object' ? optVal.next : optVal;
+      handleButtonClick(currentId, label, next);
+      e.preventDefault();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentId, handleButtonClick]);
 
   return (
     <div className="field relative w-screen h-screen overflow-hidden">
-      <div className="absolute bg-cover inset-0 opacity-100 -z-50 pointer-events-none bg-[#f3f2e4]">
+      <div className="absolute bg-cover inset-0 opacity-100 -z-50 pointer-events-none bg-beige">
       </div> 
       {Object.entries(questions).map(([id, q]) => {
   // Determine result text based on percentage
@@ -83,21 +107,23 @@ function Field({ elRefs }) {
           style={{
             top: q.y || "0%",
             left: q.x || "0%",
-            transform: "translate(-50%, -50%)"
           }}
-          className="absolute flex flex-col items-start"
+          className={
+            `absolute flex flex-col items-start transition-transform origin-center transform -translate-x-1/2 -translate-y-1/2 ` +
+            (currentId === id ? "scale-[2] z-50" : "")
+          }
         >
           {q.options ? (
             <>
               {q.explanation && (
                 Array.isArray(q.explanation)
                   ? q.explanation.map((line, index) => (
-                      <div key={index} className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
+                      <div key={index} className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-beige text-center">
                         <p className="font-onul text-[7.3px] leading-none">{line}</p>
                       </div>
                     ))
                   : (
-                    <div className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
+                    <div className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-beige text-center">
                       <p className="font-onul text-[7.3px] leading-none">{q.explanation}</p>
                     </div>
                   )
@@ -105,7 +131,7 @@ function Field({ elRefs }) {
             </>
           ) : (
             renderedLines.map((line, index) => (
-              <div key={index} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-left">
+              <div key={index} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-beige text-left">
                 <p className="text-[10px] leading-tight font-onul">{line}</p>
               </div>
             ))
@@ -114,14 +140,14 @@ function Field({ elRefs }) {
             <div
               className={
                 `h-[14px] flex max-w-fit items-center transition-all ` +
-                (currentId === id ? "ring-1 ring-[#db4242] z-10" : "opacity-90")}
+                (currentId === id ? "z-10" : "opacity-90")}
             >
               <div
                 ref={el => elRefs.current[id] = el}
                 className="flex flex-col items-center relative"
               >
                 {renderedLines.map((line, idx) => (
-                  <div key={idx} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
+                  <div key={idx} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-beige text-center">
                     <p className="text-[10px] leading-tight font-onul font-[900]">{line}</p>
                   </div>
                 ))}

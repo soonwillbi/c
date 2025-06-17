@@ -1,6 +1,8 @@
 import React from 'react';
 import { useQuestionStore } from '../store';
 
+
+
 /**
  * Calculates the control point for a quadratic Bézier based on fixed curvature k.
  */
@@ -33,7 +35,10 @@ function PathLines({ elRefs }) {
         const el2 = elRefs[to];
         if (!el1 || !el2) return null;
         const r1 = el1.getBoundingClientRect();
+        console.log('start', from, '→', r1.left, r1.top);
+
         const r2 = el2.getBoundingClientRect();
+        
         const x1 = r1.left + r1.width / 2;
         const y1 = r1.top + r1.height / 2;
         const x2 = r2.left + r2.width / 2;

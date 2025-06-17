@@ -7,11 +7,15 @@ import React from 'react';
  */
 export default function Calculation({ time, k }) {
   return (
-    <div className="absolute bottom-0 right-0 m-6 p-2 border border-[#272727] text-[8px] font-onul">
-      <p className="font-onul mb-1">곡률 계산식</p>
+    <div className="absolute bottom-0 right-0 m-6 p-2 flex flex-col whitespace-nowrap">
+      <div className="relative -mb-[1px] leading-[8px] pb-[2px] px-0.5 w-max border border-[#272727] text-[8px] font-onul">
+        <p className="font-onul ">곡률 계산식</p>
+      </div>
+    <div className="relative leading-[8px] pb-[4px] pt-[1px] px-0.5  border border-[#272727] text-[8px] font-onul">
+      
       <p className="font-onul underline">시간 → 곡률 k 매핑</p>
       <pre className="font-onul">
-{`현재 time: ${time} ms
+{`time: ${time} ms
 k: ${k}`}
       </pre>
       <p className="font-onul underline mt-2">제어점 계산</p>
@@ -30,5 +34,6 @@ cx = mx + ux * len * k
 cy = my + uy * len * k`}
       </pre>
     </div>
+  </div>
   );
 }

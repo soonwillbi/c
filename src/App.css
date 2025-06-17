@@ -1,7 +1,7 @@
 
 .btn {
   @apply relative overflow-visible 
-  m-0.5 
+  m-0.5 bg-beige
   flex justify-center items-start
   transition-all
   whitespace-nowrap;
@@ -25,8 +25,8 @@
     max-w-full
     text-[8px] font-onul
     border-[1px]
-     border-[#272727] bg-[#eae9e1] text-[#272727]
-     hover:border-[#eae9e1] hover:bg-[#272727] hover:text-[#eae9e1];
+     border-[#272727] bg-beige text-[#272727]
+     hover:border-beige hover:bg-[#272727] hover:text-beige;
 }
 
 .btn-text-double{

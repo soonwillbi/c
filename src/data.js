@@ -7,14 +7,14 @@ qi1: {
   "...": "qi2",
   X: "q100",
   }},
-qi2: { text: "적절한 선택인지 점검이 필요한가?", x: "50%", y: "81%",
+qi2: { text: "적절한 선택인지 점검이 필요한가?", x: "50%", y: "80%",
       options: {
       O: "qi3",
       "...": "q3",
       X: "q100"    
    }},
 qi3: {
-  text: "선택 점검에 할애할 시간은 얼마인가?", x: "50%", y: "73%",
+  text: "선택 점검에 할애할 시간은 얼마인가?", x: "50%", y: "72%",
   options: {
     "l": { action: "decreaseTime" },
     current: { action: "startTimer" , next: "qa1m"}, // default display, controlled by state

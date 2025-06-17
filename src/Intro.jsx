@@ -8,22 +8,48 @@ import App from "./App";
  */
 export default function Intro() {
   const [started, setStarted] = useState(false);
+  const [inputText, setInputText] = useState("");
 
   if (started) {
     return <App />;
   }
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center bg-[#f3f2e4]">
-      <h1 className="text-4xl font-onul font-[900] mb-8">
-        점프대는 언제나 점검중인 상태로 동결이다. 
-        동시에 확실로 치닫는 아침 해를 희망한다.</h1>
+    <div className="px-20 w-screen h-screen flex flex-col items-center justify-center bg-beige">
+      <div className="w-2/3 flex flex-row  mb-40" >
+<h1 className="whitespace-pre-line text-4xl font-onul font-[900] w-3/4">
+       {`점프대는 언제나 점검중인 상태로 동결이다. 
+        동시에 확실로 치닫는 아침 해를 희망한다.`}</h1>
+        <div className="whitespace-pre-line text-l font-onul font-[900] w-1/4">
+          {`점프는 자신의 세계를 확장해줄 텐데
+영원히 다리를 두드려 보다 끝나곤 합니다.
+어떤 나를 만드는 분기는 선택에서 생기지요.
+
+이 점검장치는 확실로 향하는 것을
+도울 수 있습니다. 아래에 점검하고자 
+하는 선택지를 입력해 보세요.`}
+        </div>
+      </div>
+      
+      <div className="flex flex-row w-2/3">
+      <input
+        className="border border-[#272727] font-onul px-2 py-1 w-3/4 max-w-s"
+        type="text"
+        placeholder="점검 필요 명제..."
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+      />
       <button
-        className="border border-[#272727] font-onul width-[20px] px-2 py-2 text-center bg-[#f3f2e4] hover:invert"
-        onClick={() => setStarted(true)}
+        className="border border-[#272727] font-onul mx-1 w-1/4 text-center max-w-s
+        bg-beige hover:bg-[#272727] hover:text-beige"
+        onClick={() => {
+          localStorage.setItem("introText", inputText);
+          setStarted(true);
+        }}
       >
-        점검하기
+        점검장치 가동
       </button>
+    </div>
     </div>
   );
 }
