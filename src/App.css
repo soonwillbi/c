@@ -1,0 +1,36 @@
+
+.btn {
+  @apply relative overflow-visible 
+  m-0.5 
+  flex justify-center items-start
+  transition-all
+  whitespace-nowrap;
+  hover:invert;
+}
+
+
+.btn img {
+  @apply relative max-w-none h-[14px];
+  hover:invert;
+}
+
+.btn-time img{
+  @apply relative max-w-none h-[11px];
+  hover:invert;
+}
+
+.btn-text {
+    @apply items-center
+    leading-[8px] pb-[2px] px-0.5 
+    max-w-full
+    text-[8px] font-onul
+    border-[1px]
+     border-[#272727] bg-[#fffef5] text-[#272727]
+     hover:border-[#fffef5] hover:bg-[#272727] hover:text-[#fffef5];
+}
+
+.btn-text-double{
+    @apply relative
+    justify-center h-[14px] overflow-visible border-black;
+}
+
