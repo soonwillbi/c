@@ -3,6 +3,7 @@ import Field from "./field.jsx";
 import BackgroundLines from "./components/BackgroundLines";
 import BgSpreadLines from "./components/BgSpreadLines.jsx"
 import PathLines from "./components/PathLines";
+import ZoomField from "./components/ZoomField.jsx";
 import Timer from "./components/timer.jsx";
 import { useQuestionStore } from "./store";
 import './index.css';
@@ -22,8 +23,19 @@ function App() {
 
   return (
     <>
-          <BgSpreadLines />
-      <BackgroundLines />
+      <div className="relative w-screen h-screen overflow-hidden">
+        <div
+          className="absolute inset-0 flex justify-center"
+          style={{ transformOrigin: "top center" }}
+        >
+          <ZoomField>
+            <BgSpreadLines />
+            <BackgroundLines />
+            <PathLines elRefs={elRefs.current} />
+            <Field elRefs={elRefs} />
+          </ZoomField>
+        </div>
+      </div>
       <div className="score absolute top-4 right-4 z-100 h-[20px] font-onul font-[900]">
         {`점수: ${percentage}%`}
       </div>
@@ -32,8 +44,6 @@ function App() {
           <Timer duration={timerDuration} />
         </div>
       )}
-      <PathLines elRefs={elRefs.current} />
-      <Field elRefs={elRefs} />
       <Calculation time={current.time || 0} k={current.k || 0} />
     </>
   );

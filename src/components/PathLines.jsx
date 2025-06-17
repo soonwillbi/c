@@ -27,7 +27,7 @@ function PathLines({ elRefs }) {
   });
 
   return (
-    <svg className="absolute inset-0 pointer-events-none w-full h-full z-10">
+    <svg className="absolute inset-0 pointer-events-none w-full h-full z-10 transition-all">
       {segments.map(({ from, to, k }, idx) => {
         const el1 = elRefs[from];
         const el2 = elRefs[to];

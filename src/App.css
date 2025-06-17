@@ -25,8 +25,8 @@
     max-w-full
     text-[8px] font-onul
     border-[1px]
-     border-[#272727] bg-[#fffef5] text-[#272727]
-     hover:border-[#fffef5] hover:bg-[#272727] hover:text-[#fffef5];
+     border-[#272727] bg-[#eae9e1] text-[#272727]
+     hover:border-[#eae9e1] hover:bg-[#272727] hover:text-[#eae9e1];
 }
 
 .btn-text-double{

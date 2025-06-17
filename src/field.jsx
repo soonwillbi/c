@@ -52,7 +52,7 @@ function Field({ elRefs }) {
 
   return (
     <div className="field relative w-screen h-screen overflow-hidden">
-      <div className="absolute bg-cover inset-0 opacity-100 -z-10 pointer-events-none bg-[#fffef5]">
+      <div className="absolute bg-cover inset-0 opacity-100 -z-50 pointer-events-none bg-[#f3f2e4]">
       </div> 
       {Object.entries(questions).map(([id, q]) => {
   // Determine result text based on percentage
@@ -92,12 +92,12 @@ function Field({ elRefs }) {
               {q.explanation && (
                 Array.isArray(q.explanation)
                   ? q.explanation.map((line, index) => (
-                      <div key={index} className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#fffef5] text-center">
+                      <div key={index} className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
                         <p className="font-onul text-[7.3px] leading-none">{line}</p>
                       </div>
                     ))
                   : (
-                    <div className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#fffef5] text-center">
+                    <div className="px-0.5 pb-[1px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
                       <p className="font-onul text-[7.3px] leading-none">{q.explanation}</p>
                     </div>
                   )
@@ -105,7 +105,7 @@ function Field({ elRefs }) {
             </>
           ) : (
             renderedLines.map((line, index) => (
-              <div key={index} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#fffef5] text-left">
+              <div key={index} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-left">
                 <p className="text-[10px] leading-tight font-onul">{line}</p>
               </div>
             ))
@@ -121,7 +121,7 @@ function Field({ elRefs }) {
                 className="flex flex-col items-center relative"
               >
                 {renderedLines.map((line, idx) => (
-                  <div key={idx} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#fffef5] text-center">
+                  <div key={idx} className="px-0.5 pb-[0.8px] -mb-[1px] border border-[#272727] bg-[#f3f2e4] text-center">
                     <p className="text-[10px] leading-tight font-onul font-[900]">{line}</p>
                   </div>
                 ))}
