@@ -52,7 +52,7 @@ export default function Timer({ onComplete }) {
   }
 
   return (
-    <div className="btn btn-text">
+    <div className="font-onul font-[900] text-[10px] leading-none">
       남은 시간 : {formatTime(remaining)}
     </div>
   );

@@ -53,26 +53,49 @@ function Field({ elRefs }) {
     }
   }, [handleAnswer, setCurrentId, lastRenderTime, addToPath]);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      const q = questions[currentId];
-      if (!q?.options) return;
-      const opts = Object.entries(q.options).filter(([key]) => !['menu'].includes(key));
-      let idx;
-      if (e.key === 'ArrowLeft') idx = 0;
-      else if (e.key === 'ArrowDown') idx = 1;
-      else if (e.key === 'ArrowRight') idx = 2;
-      else return;
-      const [optKey, optVal] = opts[idx] || [];
-      if (!optKey) return;
-      const label = typeof optVal === 'object' ? optVal.label : optKey;
-      const next = typeof optVal === 'object' ? optVal.next : optVal;
-      handleButtonClick(currentId, label, next);
-      e.preventDefault();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentId, handleButtonClick]);
+    useEffect(() => {
+      const handleKeyDown = (e) => {
+        const q = questions[currentId];
+        if (!q?.options) return;
+        const opts = Object.entries(q.options); // include 'menu'
+        let idx;
+        if (e.key === 'ArrowLeft') idx = 0;
+        else if (e.key === 'ArrowDown') idx = 1;
+        else if (e.key === 'ArrowRight') idx = 2;
+        else return;
+
+        const [optKey, optVal] = opts[idx] || [];
+
+        // If the selected item is menu, always trigger menu toggle
+        if (optKey === "menu") {
+          toggleSubMenu();
+          e.preventDefault();
+          return;
+        }
+
+        // Handle submenu children when open
+        if (isSubMenuOpen) {
+          const submenuEntries = Object.entries(q.options.menu?.children || {});
+          const submenuIdx = idx === 0 ? 0 : idx === 2 ? 1 : -1;
+          const [subKey, subVal] = submenuEntries[submenuIdx] || [];
+          if (subKey) {
+            const next = typeof subVal === 'object' ? subVal.next : subVal;
+            handleButtonClick(currentId, subKey, next);
+            e.preventDefault();
+            return;
+          }
+        }
+
+        if (!optKey) return;
+        const label = typeof optVal === 'object' ? optVal.label : optKey;
+        const next = typeof optVal === 'object' ? optVal.next : optVal;
+        handleButtonClick(currentId, label, next);
+        e.preventDefault();
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentId, handleButtonClick, isSubMenuOpen, toggleSubMenu]);
 
   return (
     <div className="field relative w-screen h-screen overflow-hidden">

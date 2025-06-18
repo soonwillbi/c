@@ -7,7 +7,7 @@ import React from 'react';
  */
 export default function Calculation({ time, k }) {
   return (
-    <div className="absolute bottom-0 right-0 m-6 p-2 flex flex-col whitespace-nowrap">
+    <div className="absolute bottom-0 right-0 m-10 flex flex-col whitespace-nowrap">
       <div className="relative -mb-[1px] leading-[8px] pb-[2px] px-0.5 w-max border border-[#272727] text-[8px] font-onul">
         <p className="font-onul ">곡률 계산식</p>
       </div>
