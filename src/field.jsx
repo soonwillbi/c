@@ -49,7 +49,6 @@ function Field({ elRefs }) {
       // record start point
       addToPath(id, delta);
       // also record destination to draw final segment
-      addToPath(next, 0);
     }
   }, [handleAnswer, setCurrentId, lastRenderTime, addToPath]);
 
